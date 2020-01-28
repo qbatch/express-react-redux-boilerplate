@@ -8,6 +8,7 @@
     "import/no-named-as-default": 0,
     "import/no-named-as-default-member": 0,
     "indent": ["error", 2, { "SwitchCase": 1 }],
-    "comma-dangle": ["error", "always-multiline"]
+    "comma-dangle": ["error", "always-multiline"],
+    "eol-last": ["error", "always"]
   }
 }
