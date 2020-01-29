@@ -1,7 +1,7 @@
 const initialState = {
   auth: {
     currentUser: {},
-    isLoggedIn: true,
+    isLoggedIn: false,
   },
   loader: {
     isLoading: false,

@@ -5,13 +5,14 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 const switchRoutes = (routes) => {
+
   return (
     <Switch>
       {
-        routes.map(route => (
-          route.isPrivate
-            ? <PrivateRoute key={route.path} {...route} />
-            : <PublicRoute key={route.path} {...route} />
+        Object.keys(routes).map(routeKey => (
+          routes[routeKey].isPrivate
+            ? <PrivateRoute key={routes[routeKey].path} {...routes[routeKey]} />
+            : <PublicRoute key={routes[routeKey].path} {...routes[routeKey]} />
         ))
       }
       <Redirect from='*' to='/not-found' />
