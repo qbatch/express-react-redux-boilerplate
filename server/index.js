@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import router from './routes';
 import applyMiddlewares from './middlewares';
 import setupDatabase from './config/database';
-import apiDocs from './openAPI';
+import apiDocs from './utils/openAPI';
 
 const app = express();
 const SERVER_PORT = process.env.SERVER_PORT || 3000;
