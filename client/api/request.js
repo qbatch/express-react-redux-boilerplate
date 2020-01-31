@@ -26,7 +26,7 @@ export default function request(
     }).then(res => {
       dispatch(successAction(res.data))
     }).catch(err => {
-      dispatch(failureAction(err));
+      dispatch(failureAction(err?.response?.data));
     }).finally(() => {
       if(options.showLoading) dispatch(hideLoader());
     })
