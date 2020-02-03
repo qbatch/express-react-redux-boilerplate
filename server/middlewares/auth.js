@@ -7,7 +7,7 @@ import User from '../models/user';
 import {
   verify as verifyHash,
 } from '../utils/hashing';
-import * as redisService from '../services/redis';
+import redisService from '../services/redis';
 
 const { AUTH_SECRET } = process.env;
 

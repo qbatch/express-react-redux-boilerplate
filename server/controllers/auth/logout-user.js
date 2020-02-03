@@ -1,4 +1,4 @@
-import * as redisService from '../../services/redis';
+import redisService from '../../services/redis';
 
 const logoutUser = async (req, res) => {
   const { email } = req.user;
