@@ -7,6 +7,7 @@ import User from '../models/user';
 import {
   verify as verifyHash
 } from '../utils/hashing';
+import { setCurrentTenantId } from './storage';
 
 const { AUTH_SECRET } = process.env;
 
@@ -73,6 +74,7 @@ export const AuthenticationStrategy = new JWTstrategy({
   User.findOne({ email })
     .then((user) => {
       if (user) {
+        setCurrentTenantId(user._id);
         done(null, user);
       } else {
         done({ message: 'User not found!' }, false);

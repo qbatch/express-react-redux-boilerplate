@@ -3,10 +3,12 @@ import passport from 'passport';
 import bodyParser from 'body-parser';
 
 import { SignupStrategy, LoginStrategy, AuthenticationStrategy } from './auth';
+import { bindCurrentNamespace } from './storage';
 
 const applyMiddlewares = (app) => {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
+  app.use(bindCurrentNamespace);
 
   app.use(logger('common'));
 
