@@ -8,4 +8,4 @@ const Product = new mongoose.Schema({
   price: { type: Number, required: true },
 });
 
-export default dynamicModel('Product', Product);
+export default dynamicModel('Products', Product);
