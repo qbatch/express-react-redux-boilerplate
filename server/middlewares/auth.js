@@ -80,11 +80,7 @@ export const AuthenticationStrategy = new JWTstrategy({
 
   redisService.get(email)
     .then((storedAuthToken) => {
-      console.log('storedAuthToken', storedAuthToken);
-      console.log('authToken      ', authToken);
       if (authToken !== storedAuthToken) return done(null, false, { message: 'Unauthorized' });
-
-      console.log('valid authToken');
 
       User.findOne({ email })
         .then((user) => {
