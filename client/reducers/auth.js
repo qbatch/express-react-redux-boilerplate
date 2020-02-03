@@ -37,6 +37,14 @@ export default function auth(state=initialState.auth, action) {
     case types.SET_IS_FETCHING_USER:
       return { ...state, isFetching: action.payload };
 
+    case types.LOGOUT_USER_SUCCESS:
+      localStorage.removeItem('AUTH_TOKEN');
+
+      return { ...state, isLoggedIn: false };
+
+    case types.LOGOUT_USER_FAILURE:
+      return state;
+
     default:
       return state;
   }

@@ -83,3 +83,25 @@ export const resetPasswordSuccess = () => {
 export const resetPasswordFailure = payload => {
   errorNotification('Update Password', payload);
 };
+
+export const logoutUserSuccess = payload => {
+  return dispatch => {
+    dispatch({
+      type: types.LOGOUT_USER_SUCCESS,
+      payload,
+    });
+
+    dispatch(push('/auth/login'));
+  }
+};
+
+export const logoutUserFailure = payload => {
+  return dispatch => {
+    dispatch({
+      type: types.LOGOUT_USER_FAILURE,
+      payload,
+    });
+
+    errorNotification('Logout', payload);
+  }
+}

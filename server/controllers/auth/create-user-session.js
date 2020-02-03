@@ -3,10 +3,10 @@ import {
 } from '../../middlewares/auth';
 
 const createUserSession = (req, res, user) => {
-  req.login(user, { session: false }, (err) => {
+  req.login(user, { session: false }, async (err) => {
     if (err) return res.status(500).send(err?.message ?? 'Internal Server Error');
 
-    return res.json({ user, token: generateAuthToken(user.email) })
+    return res.json({ user, token: await generateAuthToken(user.email) })
   });
 };
 

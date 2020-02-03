@@ -60,3 +60,12 @@ export const resetPassword = (data, successAction, failureAction) => dispatch =>
     { showLoading: true },
   ),
 );
+
+export const logoutUser = (successAction, failureAction) => dispatch => dispatch(
+  request(
+    '/logout',
+    { method: 'DELETE' },
+    successAction,
+    failureAction,
+  ),
+);
