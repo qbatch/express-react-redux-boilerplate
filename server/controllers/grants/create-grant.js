@@ -1,14 +1,11 @@
 import Grant from '../../models/grant';
 
 const createGrant = async (req, res) => {
-  const { role, resource, action, userId, attributes } = req.body;
+  const { role, permissions } = req.body;
 
   const grant = await Grant.create({
     role,
-    resource,
-    action,
-    attributes,
-    userId,
+    permissions,
   });
 
   return res.status(200).json({ grant });

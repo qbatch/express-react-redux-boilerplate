@@ -1,25 +1,30 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 import {
   encrypt,
 } from '../utils/hashing';
+import { transform } from './grant';
 
-const User = new mongoose.Schema({
+const User = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   resetPasswordToken: String,
   resetPasswordExpiresAt: Date,
-  isAdmin: Boolean,
   authToken: String,
+  grant: { type: Schema.Types.ObjectId, ref: 'Grant' },
 }, {
   toJSON: {
-    transform: function(docs, _ret) {
+    transform(_docs, _ret) {
       delete _ret.password;
       delete _ret.__v;
       delete _ret.authToken;
-    }
-  }
+
+      if (typeof _ret.grant !== 'string') {
+        _ret.grant = transform(_ret.grant);
+      }
+    },
+  },
 });
 
 User.pre('save', async function(next) {

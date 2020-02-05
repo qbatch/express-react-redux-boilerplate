@@ -28,7 +28,7 @@ export const loginUser = (data, successAction, failureAction) => dispatch => dis
 
 export const getCurrentUser = (successAction, failureAction) => dispatch => dispatch(
   request(
-    '/get-current-user',
+    '/users/get-current-user',
     { method: 'GET' },
     successAction,
     failureAction,

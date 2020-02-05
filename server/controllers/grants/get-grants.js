@@ -1,7 +1,9 @@
 import Grant from '../../models/grant';
 
 const getGrants = async (req, res) => {
-  const grants = await Grant.find();
+  let grants = await Grant.find();
+
+  grants = grants.map(grant => grant.transform()).flat();
 
   return res.status(200).json({ grants });
 };

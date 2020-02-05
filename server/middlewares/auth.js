@@ -4,6 +4,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JWTstrategy, ExtractJwt } from 'passport-jwt';
 
 import User from '../models/user';
+import Grant from '../models/grant';
 import {
   verify as verifyHash,
 } from '../utils/hashing';
@@ -21,28 +22,29 @@ export const SignupStrategy = new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true,
   session: false
-}, (req, email, password, done) => {
-  const { name } = req.body;
+}, async (req, email, password, done) => {
+  let { name, grant } = req.body;
 
-  User.findOne({
-    email,
-  }).then((dbUser) => {
-    if (dbUser) return done({ message: 'Email already in use' }, false);
+  try {
+    let user = await User.findOne({ email });
 
-    const user = new User({
+    if(user) return done({ message: 'Email already in use' }, false);
+
+    if(!grant) {
+      grant = (await Grant.findOne({ role: 'user' }))._id;
+    }
+
+    user = await User.create({
       email,
       name,
       password,
+      grant,
     });
 
-    user.save().then((newUser) => {
-      return done(null, newUser);
-    }).catch((err) => {
-      done(err, false);
-    });
-  }).catch((err) => {
-    done(err, false);
-  });
+    return done(null, user);
+  } catch (err) {
+    done(err, false)
+  }
 });
 
 export const LoginStrategy = new LocalStrategy({
@@ -73,7 +75,7 @@ export const AuthenticationStrategy = new JWTstrategy({
 }, (req, email, done) => {
   const authToken = req.headers.authorization.split(' ')[1];
 
-  User.findOne({ email })
+  User.findOne({ email }).populate('grant')
     .then((user) => {
       if (user) {
         if (authToken !== user.authToken) return done(null, false, { message: 'Unauthorized' });
