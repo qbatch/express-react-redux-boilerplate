@@ -10,7 +10,7 @@ const sendResetPasswordMail = async (to, resetPasswordToken) => {
       You are receiving this because you (or someone else) has requested the reset of the password for your ${APP_NAME} account.
     </p>
     <p>
-      Click <a href='${appUrl}/auth/reset/${resetPasswordToken}' target='_blank'>here</a> to reset your password.
+      Click <a href='${appUrl}/auth/reset-password/${resetPasswordToken}' target='_blank'>here</a> to reset your password.
     </p>
     <p>
       If you did not request this, please ignore this email and your password will remain unchanged.

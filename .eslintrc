@@ -1,7 +1,18 @@
 {
   "extends": ["airbnb", "prettier", "prettier/react"],
   "plugins": ["prettier", "react-hooks"],
+  "globals": {
+    "window": true,
+    "document": true,
+    "localStorage": true,
+    "FormData": true,
+    "FileReader": true,
+    "Blob": true,
+    "navigator": true,
+    "File": true
+  },
   "rules": {
+    "strict": 0,
     "react-hooks/rules-of-hooks": "error",
     "quotes": ["error", "single"],
     "jsx-quotes": ["error", "prefer-single"],
@@ -9,6 +20,15 @@
     "import/no-named-as-default-member": 0,
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "comma-dangle": ["error", "always-multiline"],
-    "eol-last": ["error", "always"]
+    "eol-last": ["error", "always"],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "react/prop-types": 0,
+    "react/jsx-props-no-spreading": 0,
+    "no-underscore-dangle": 0
   }
 }
