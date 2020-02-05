@@ -3,6 +3,7 @@ import express from 'express';
 import { join } from 'path';
 import swaggerUi from 'swagger-ui-express';
 
+import './extensions';
 import router from './routes';
 import applyMiddlewares from './middlewares';
 import setupDatabase from './config/database';

@@ -11,5 +11,11 @@
     "@babel/plugin-syntax-dynamic-import",
     "react-hot-loader/babel",
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
-  ]
+  ],
+  "env": {
+    "debug": {
+      "sourceMaps": "inline",
+      "retainLines": true
+    }
+  }
 }
