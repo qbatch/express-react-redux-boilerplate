@@ -11,11 +11,13 @@ const User = new mongoose.Schema({
   resetPasswordToken: String,
   resetPasswordExpiresAt: Date,
   isAdmin: Boolean,
+  authToken: String,
 }, {
   toJSON: {
     transform: function(docs, _ret) {
       delete _ret.password;
       delete _ret.__v;
+      delete _ret.authToken;
     }
   }
 });

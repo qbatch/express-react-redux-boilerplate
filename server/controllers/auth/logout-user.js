@@ -1,9 +1,8 @@
-import redisService from '../../services/redis';
-
 const logoutUser = async (req, res) => {
-  const { email } = req.user;
+  const { user } = req;
 
-  await redisService.set(email, '');
+  user.authToken = null;
+  await user.save();
 
   return res.status(200).json({ status: true });
 };

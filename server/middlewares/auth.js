@@ -7,15 +7,10 @@ import User from '../models/user';
 import {
   verify as verifyHash,
 } from '../utils/hashing';
-import redisService from '../services/redis';
 
 const { AUTH_SECRET } = process.env;
 
-export const generateAuthToken = async (payload) => {
-  const authToken = sign(payload, AUTH_SECRET);
-  await redisService.set(payload, authToken);
-  return authToken;
-}
+export const generateAuthToken = (payload) => sign(payload, AUTH_SECRET);
 
 export const authenticateAuthToken = () => passport.authenticate('jwt', { session: false });
 
@@ -78,19 +73,15 @@ export const AuthenticationStrategy = new JWTstrategy({
 }, (req, email, done) => {
   const authToken = req.headers.authorization.split(' ')[1];
 
-  redisService.get(email)
-    .then((storedAuthToken) => {
-      if (authToken !== storedAuthToken) return done(null, false, { message: 'Unauthorized' });
+  User.findOne({ email })
+    .then((user) => {
+      if (user) {
+        if (authToken !== user.authToken) return done(null, false, { message: 'Unauthorized' });
 
-      User.findOne({ email })
-        .then((user) => {
-          if (user) {
-            done(null, user);
-          } else {
-            done(null, false, { message: 'User not found!' });
-          }
-        })
-        .catch(err => done(null, false, err));
+        done(null, user);
+      } else {
+        done(null, false, { message: 'User not found!' });
+      }
     })
     .catch(err => done(null, false, err));
 });
