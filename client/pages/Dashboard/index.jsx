@@ -1,7 +1,9 @@
 import React from 'react';
-import CanAccess from '../../components/CanAccess';
+import CanAccess, { useGrants } from '../../components/CanAccess';
 
 const Dashboard = () => {
+  const hasAccess = useGrants();
+
   return (
     <>
       <h1>Dashboard</h1>
@@ -12,6 +14,12 @@ const Dashboard = () => {
       <CanAccess grant={{ resource: 'user', action: 'read', possession: 'own' }}>
         <div>User has access to view his information</div>
       </CanAccess>
+
+      {
+        hasAccess({ resource: 'user', action: 'read', possession: 'own' }) && <div>
+          Showing user using useGrants hook
+        </div>
+      }
     </>
   );
 };
