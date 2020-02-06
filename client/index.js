@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 
 import { history, store } from './store';
 import App from './App';
+import '../server/extensions';
 
 ReactDOM.render(
   <Provider store={store}>

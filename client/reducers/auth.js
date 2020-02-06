@@ -8,7 +8,7 @@ export default function auth(state=initialState.auth, action) {
 
       localStorage.setItem('AUTH_TOKEN', token);
 
-      return { ...state, currentUser: user, isLoggedIn: true };
+      return { ...state, currentUser: user, isLoggedIn: true, grants: user.grant };
     }
 
     case types.REGISTER_USER_FAILURE:
@@ -19,7 +19,7 @@ export default function auth(state=initialState.auth, action) {
 
       localStorage.setItem('AUTH_TOKEN', token);
 
-      return { ...state, currentUser: user, isLoggedIn: true };
+      return { ...state, currentUser: user, isLoggedIn: true, grants: user.grant };
     }
 
     case types.LOGIN_USER_FAILURE:
@@ -28,7 +28,7 @@ export default function auth(state=initialState.auth, action) {
     case types.GET_CURRENT_USER_SUCCESS: {
       const { user } = action.payload;
 
-      return { ...state, currentUser: user, isLoggedIn: true, isFetching: false };
+      return { ...state, currentUser: user, isLoggedIn: true, isFetching: false, grants: user.grant };
     }
 
     case types.GET_CURRENT_USER_FAILURE:
