@@ -10,19 +10,13 @@ const canAccess = (res, act, pos) => {
   return ac.can(grants[0].role)[`${act}${pos.capitalize()}`](res).granted
 };
 
-const CanAccess = ({ grant: { resource, action, possession }, children }) => {
-  // const grants = useSelector(state => state.auth.grants);
-
-  // const ac = new AccessControl(grants);
-
-  return (
-    <>
-      {
-        canAccess(resource, action, possession) ? children : null
-      }
-    </>
-  )
-};
+const CanAccess = ({ grant: { resource, action, possession }, children }) => (
+  <>
+    {
+      canAccess(resource, action, possession) ? children : null
+    }
+  </>
+);
 
 export const useGrants = () => ({ resource, action, possession }) => {
   return canAccess(resource, action, possession);
