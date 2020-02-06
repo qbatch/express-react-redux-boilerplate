@@ -1,25 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import AccessControl from 'accesscontrol';
+import useGrants from 'use-accesscontrol-grants';
 
-const canAccess = (res, act, pos) => {
+export const canAccess = (role) => ({ resource, action, possession }) => {
   const grants = useSelector(state => state.auth.grants);
 
-  const ac = new AccessControl(grants);
-
-  return ac.can(grants[0].role)[`${act}${pos.capitalize()}`](res).granted
+  return useGrants(grants)(role)(resource, action, possession);
 };
 
-const CanAccess = ({ grant: { resource, action, possession }, children }) => (
+export const canRoleAccess = (role, { resource, action, possession }) => {
+  return canAccess(role)({resource, action, possession});
+};
+
+const CanAccess = ({ role, grant: { resource, action, possession }, children }) => (
   <>
     {
-      canAccess(resource, action, possession) ? children : null
+      canRoleAccess(role, { resource, action, possession }) ? children : null
     }
   </>
 );
-
-export const useGrants = () => ({ resource, action, possession }) => {
-  return canAccess(resource, action, possession);
-};
 
 export default CanAccess;
