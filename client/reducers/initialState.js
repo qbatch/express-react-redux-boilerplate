@@ -3,10 +3,11 @@ const initialState = {
     currentUser: {},
     isLoggedIn: false,
     isFetching: false,
+    grants: [],
   },
   loader: {
     isLoading: false,
-  }
+  },
 };
 
 export default initialState;
