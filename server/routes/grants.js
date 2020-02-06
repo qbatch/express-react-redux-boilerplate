@@ -1,4 +1,5 @@
 import express from 'express';
+import { canAccess } from 'express-authorize-routes';
 
 import catchErrors from '../utils/catch-errors';
 import {
@@ -9,38 +10,37 @@ import {
   deletePermissionFromRole,
   updatePermissionInRole,
 } from '../controllers/grants';
-import { canAccess } from '../middlewares/grants';
 
 const router = express.Router();
 
 router.get(
   '/',
-  canAccess('grant', 'read', 'any'),
+  (req, res, next) => canAccess(req.user.grant?.role, 'grant', 'read', 'any')(req, res, next),
   catchErrors(getGrants),
 );
 router.post(
   '/',
-  canAccess('grant', 'create', 'any'),
+  (req, res, next) => canAccess(req.user.grant?.role, 'grant', 'create', 'any')(req, res, next),
   catchErrors(createGrant),
 );
 router.post(
   '/:role/permissions',
-  canAccess('grant', 'create', 'any'),
+  (req, res, next) => canAccess(req.user.grant?.role, 'grant', 'create', 'any')(req, res, next),
   catchErrors(addPermissionToRole),
 );
 router.put(
   '/:role/permissions/:permissionId',
-  canAccess('grant', 'update', 'any'),
+  (req, res, next) => canAccess(req.user.grant?.role, 'grant', 'update', 'any')(req, res, next),
   catchErrors(updatePermissionInRole),
 );
 router.delete(
   '/:role/permissions/:permissionId',
-  canAccess('grant', 'delete', 'any'),
+  (req, res, next) => canAccess(req.user.grant?.role, 'grant', 'delete', 'any')(req, res, next),
   catchErrors(deletePermissionFromRole),
 );
 router.delete(
   '/:id',
-  canAccess('grant', 'delete', 'any'),
+  (req, res, next) => canAccess(req.user.grant?.role, 'grant', 'delete', 'any')(req, res, next),
   catchErrors(deleteGrant),
 );
 

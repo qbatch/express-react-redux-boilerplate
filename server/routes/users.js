@@ -1,23 +1,23 @@
 import express from 'express';
+import { canAccess } from 'express-authorize-routes';
 
 import catchErrors from '../utils/catch-errors';
 import {
   getAllUsers,
   getCurrentUser,
 } from '../controllers/users';
-import { canAccess } from '../middlewares/grants';
 
 const router = express.Router();
 
 router.get(
   '/',
-  canAccess('User', 'read', 'any'),
+  (req, res, next) => canAccess(req.user.grant?.role, 'user', 'read', 'any')(req, res, next),
   catchErrors(getAllUsers),
 );
 
 router.get(
   '/get-current-user',
-  canAccess('user', 'read', 'own'),
+  (req, res, next) => canAccess(req.user.grant?.role, 'user', 'read', 'own')(req, res, next),
   catchErrors(getCurrentUser),
 );
 

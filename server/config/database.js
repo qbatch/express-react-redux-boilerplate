@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+import { setGrants } from 'express-authorize-routes';
 
 import seedDB from './seeds';
-import { setGrants } from '../middlewares/grants';
+import Grant from '../models/grant';
 
 const options = {
   useNewUrlParser: true,
@@ -19,8 +20,12 @@ const setupDatabase = () => {
         .then(() => {
           console.log('DB seed successful')
 
-          setGrants()
-            .then(() => console.log('Setup permissions'))
+          Grant.find()
+            .then((grants) => {
+              grants = grants.map(grant => grant.transform()).flat();
+              setGrants(grants);
+              console.log('Setup permissions')
+            })
             .catch(err => console.log('ERROR - Unable to setup permissions', err));
         })
         .catch(err => console.log('ERROR - Unable to seed DB', err));
